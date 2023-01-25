@@ -12,3 +12,4 @@ def sigmoid(x):
 
 def relu(x):
     return np.maximum(0,x)
+
