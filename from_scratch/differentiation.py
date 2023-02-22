@@ -5,6 +5,7 @@ import numpy as np
 #import matplotlib.pylab as plt
 import matplotlib.pyplot as plt
 
+
 ## Differentiation
 def numerical_diff(f, x):
     h = 1e-50   # 아주 작은 값
@@ -29,8 +30,8 @@ plt.show()
 
 """"""
 
-numerical_diff(function_1, 5)   # 0.1999999999990898
-numerical_diff(function_1, 10)  # 0.2999999999986347
+numerical_diff(function_1, 5)   # >>> 0.1999999999990898
+numerical_diff(function_1, 10)  # >>> 0.2999999999986347
 
 def tangent_line(f, x):
     d = numerical_diff(f, x)
@@ -51,3 +52,32 @@ y3 = tf(x)
 plt.plot(x, y)
 plt.plot(x, y3)
 plt.show()
+
+
+## Partial Derivative: 편미분, 변수가 여럿인 함수의 미분
+def function_2(x):
+    return np.sum(x**2)
+
+
+## Gradient: 기울기, 모든 변수의 편미분을 벡터로 정리한 것
+def numerical_gradient(f, x):
+    h = 1e-4   # 0.0001
+    grad = np.zeros_like(x)   # x와 형상이 같은 0행렬 생성
+
+    for idx in range(x.size):
+        tmp_val = x[idx]
+
+        # f(x+h) 계산
+        x[idx] = tmp_val + h
+        fxh1 = f(x)
+
+        # f(x-h) 계산
+        x[idx] = tmp_val - h
+        fxh2 = f(x)
+
+        grad[idx] = (fxh1 - fxh2) / (2*h)
+        x[idx] = tmp_val
+
+    return grad 
+
+numerical_gradient(function_2, np.array([3.0, 4.0]))   # >>> array([6., 8.])
